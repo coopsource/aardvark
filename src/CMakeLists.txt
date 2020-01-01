@@ -14,7 +14,7 @@ set( OpenVR_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/openvr/headers )
 set( OpenVR_LIB_DIR ${CMAKE_SOURCE_DIR}/thirdparty/openvr/lib/win64 )
 set( OpenVR_BIN_DIR ${CMAKE_SOURCE_DIR}/thirdparty/openvr/bin/win64 )
 
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /DEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 set( TinyProcessLibrary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/tiny-process-library )

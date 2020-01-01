@@ -49,6 +49,7 @@ target_compile_definitions(avrenderer PRIVATE
 	NOMINMAX
 	)
 
+
 target_link_directories( avrenderer PRIVATE ${CEF_BINARY_DIR} )
 
 if(RESOURCE_INSTALL_DIR)
@@ -63,6 +64,8 @@ add_custom_command(TARGET avrenderer POST_BUILD
 )
 add_custom_command(TARGET avrenderer POST_BUILD
                    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_BINARY_DIR}/crashwrapper/$<CONFIG>/crashwrapper.dll" "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/" )
+add_custom_command(TARGET avrenderer POST_BUILD
+                   COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_BINARY_DIR}/crashwrapper/$<CONFIG>/crashwrapper.pdb" "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/" )
 
 set( CEF_TARGET_OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/")
 
