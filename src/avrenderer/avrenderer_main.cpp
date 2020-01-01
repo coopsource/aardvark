@@ -14,11 +14,16 @@
 #include <tools/systools.h>
 #include <tools/pathtools.h>
 #include <tools/stringtools.h>
+#include <crashwrapper/crashwrapper.h>
 
 // OS specific macros for the example main entry points
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 {
 	tools::initLogs();
+
+	std::string sLogFilePath = tools::getLogFile().generic_string();
+	const char* logFilePath = sLogFilePath.c_str();
+	initCrashHandler( tools::getDumpDir().generic_string().c_str(), ".", &logFilePath, 1 );
 
 	// give the CEF subprocess the first crack
 	  // Enable High-DPI support on Windows 7 or newer.

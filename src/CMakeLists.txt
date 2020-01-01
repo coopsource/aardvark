@@ -5,7 +5,7 @@ project( Aardvark VERSION 0.2.0
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 set(NAME Aardvark)
 
-
+set( CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE )
 
 set( Vulkan_LIBRARY ${CMAKE_SOURCE_DIR}/thirdparty/vulkan/libs/vulkan-1.lib  )
 set( Vulkan_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/vulkan  )
@@ -14,13 +14,22 @@ set( OpenVR_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/openvr/headers )
 set( OpenVR_LIB_DIR ${CMAKE_SOURCE_DIR}/thirdparty/openvr/lib/win64 )
 set( OpenVR_BIN_DIR ${CMAKE_SOURCE_DIR}/thirdparty/openvr/bin/win64 )
 
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /DEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 set( TinyProcessLibrary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/tiny-process-library )
 set( TinyProcessLibrary_LIB_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/thirdparty/tiny-process-library/$<CONFIG> )
 
-message ( "tpl" $TinyProcessLibrary_LIB_DIR )
+set( Backtrace_BIN_DIR ${CMAKE_SOURCE_DIR}/thirdparty/backtrace/crashpad-2020-01-01-release-x64/bin )
+set( Backtrace_LibSuffix $<IF:$<CONFIG:Debug>,_debug,_release> )
+set( Backtrace_LIB_DIR ${CMAKE_SOURCE_DIR}/thirdparty/backtrace/crashpad-2020-01-01-release-x64/lib_mt${Backtrace_LibSuffix} )
+set( Backtrace_BinaryFiles
+	crashpad_database_util.exe
+	crashpad_handler.com
+	crashpad_handler.exe
+	crashpad_http_upload.exe
+	)
+
 set( CEF_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/cef_binary_78 )
 find_package( CEF )
 
@@ -36,6 +45,7 @@ set( AV_DATA ${CMAKE_SOURCE_DIR}/../data )
 add_compile_options( "/std:c++17" )
 
 add_subdirectory(aardvark)
+add_subdirectory(crashwrapper)
 add_subdirectory(tools)
 add_subdirectory(tests)
 add_subdirectory(gltfpbr_base)
